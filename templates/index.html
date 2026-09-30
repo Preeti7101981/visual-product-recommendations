@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Visual Product Recommendations</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 900px; margin: 40px auto; padding: 0 20px; color: #222; }
+        h1 { font-size: 32px; margin-bottom: 4px; }
+        .subtitle { color: #555; margin-bottom: 24px; }
+        .upload-section { border: 1px solid #ccc; border-radius: 8px; padding: 24px; }
+        .upload-btn-label { display: inline-block; background: #3b5f8a; color: #fff; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+        .upload-btn-label:hover { background: #2f4d70; }
+        input[type="file"] { display: none; }
+        .filename { margin-left: 10px; color: #555; font-size: 14px; }
+        .preview-box { border: 1px solid #bbb; border-radius: 6px; width: 220px; height: 260px; margin-top: 16px; display: flex; align-items: center; justify-content: center; color: #888; text-align: center; overflow: hidden; background: #fafafa; }
+        .preview-box img { width: 100%; height: 100%; object-fit: cover; }
+        .recommend-btn { background: #3b5f8a; color: #fff; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 14px; margin-top: 16px; }
+        .recommend-btn:hover { background: #2f4d70; }
+        .error { color: #b00020; margin-top: 12px; }
+        .results { display: flex; gap: 16px; margin-top: 32px; flex-wrap: wrap; }
+        .result-col { width: 150px; text-align: center; }
+        .result-label { font-size: 13px; font-weight: bold; color: #333; margin-bottom: 8px; min-height: 34px; }
+        .result-box { border: 1px solid #bbb; border-radius: 6px; width: 150px; height: 190px; overflow: hidden; }
+        .result-box img { width: 100%; height: 100%; object-fit: cover; }
+        .catalogue-note { color: #777; font-size: 12px; margin-top: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Visual Product Recommendations</h1>
+    <p class="subtitle">Upload a photo of a clothing item you like to see visually similar products from our full catalogue.</p>
+
+    <div class="upload-section">
+        <form action="/recommend" method="post" enctype="multipart/form-data" id="uploadForm">
+            <label class="upload-btn-label" for="imageInput">Upload Image</label>
+            <input type="file" id="imageInput" name="image" accept="image/*" required onchange="previewImage(event)">
+            <span class="filename" id="filenameLabel">No file chosen</span>
+
+            <div class="preview-box" id="previewBox">
+                {% if uploaded_image %}
+                    <img src="{{ uploaded_image }}" alt="Input image">
+                {% else %}
+                    <span>Input image preview</span>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="recommend-btn">Get Recommendations</button>
+        </form>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+    </div>
+
+    {% if recommendations %}
+        <div class="results">
+            {% for rec in recommendations %}
+            <div class="result-col">
+                <div class="result-label">Image {{ loop.index }} Similarity Score: {{ rec.score }}</div>
+                <div class="result-box">
+                    <img src="{{ rec.image_url }}" alt="Recommended image {{ loop.index }}">
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <script>
+        function previewImage(event) {
+            const file = event.target.files[0];
+            const filenameLabel = document.getElementById('filenameLabel');
+            const previewBox = document.getElementById('previewBox');
+            if (!file) { filenameLabel.textContent = 'No file chosen'; return; }
+            filenameLabel.textContent = file.name;
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                previewBox.innerHTML = '<img src="' + e.target.result + '" alt="Preview">';
+            };
+            reader.readAsDataURL(file);
+        }
+    </script>
+</body>
+</html>

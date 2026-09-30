@@ -1,0 +1,16 @@
+venv/
+__pycache__/
+*.pyc
+.git/
+.gitignore
+
+# The Docker image should NOT bundle the dataset - the app downloads the
+# full catalogue from Hugging Face Hub at container startup instead.
+data/raw/
+data/processed/
+data/cleaned_manifest.csv
+artifacts/embeddings.pt
+artifacts/results/
+
+static/uploads/*
+!static/uploads/.gitkeep

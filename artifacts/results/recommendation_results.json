@@ -1,0 +1,87 @@
+{
+  "random_seed": 42,
+  "n_eval_images": 3,
+  "top_n": 5,
+  "target_similarity": 0.7,
+  "model": "resnet50",
+  "results": [
+    {
+      "query_filename": "97bfc156220748d8b56def5b4b58f743.jpg",
+      "recommendations": [
+        {
+          "filename": "4cabca48df6943689cb332103d275f69.jpg",
+          "cosine_similarity": 0.9293
+        },
+        {
+          "filename": "11ddb579d5c549a8adc4417b346b5716.jpg",
+          "cosine_similarity": 0.9221
+        },
+        {
+          "filename": "8e02639908b44891bca1e4ea74f12b85.jpg",
+          "cosine_similarity": 0.8725
+        },
+        {
+          "filename": "fd3c957d310b4898ab735b99a0cc0680.jpg",
+          "cosine_similarity": 0.8534
+        },
+        {
+          "filename": "9a72d1d144db41809abe8fb2b5e8fbc3.jpg",
+          "cosine_similarity": 0.8527
+        }
+      ],
+      "figure": "C:\\Users\\User\\Desktop\\visual-product-recommendations-v2\\artifacts\\results\\eval_query_1_97bfc156220748d8b56def5b4b58f743.png"
+    },
+    {
+      "query_filename": "0f112da04dc5487abbb4a5776489906c.jpg",
+      "recommendations": [
+        {
+          "filename": "96764c4c65cb4872923f8555af0bc287.jpg",
+          "cosine_similarity": 0.7769
+        },
+        {
+          "filename": "6ce8a15f0ded493cb53b94522baff7fe.jpg",
+          "cosine_similarity": 0.7689
+        },
+        {
+          "filename": "34c53e2749674d82a0266c6a7fc82efc.jpg",
+          "cosine_similarity": 0.7298
+        },
+        {
+          "filename": "6b600f46879543e38b3c287e81aba7ff.jpg",
+          "cosine_similarity": 0.7251
+        },
+        {
+          "filename": "fa6d8ddaa5e345e6bdf5c01ff8b42658.jpg",
+          "cosine_similarity": 0.7223
+        }
+      ],
+      "figure": "C:\\Users\\User\\Desktop\\visual-product-recommendations-v2\\artifacts\\results\\eval_query_2_0f112da04dc5487abbb4a5776489906c.png"
+    },
+    {
+      "query_filename": "0236aadcf2ec45d484970ae923179aa7_409.jpg",
+      "recommendations": [
+        {
+          "filename": "0236aadcf2ec45d484970ae923179aa7.jpg",
+          "cosine_similarity": 1.0
+        },
+        {
+          "filename": "64c36ca257c04e6c80c24d3c3f6e2c23.jpg",
+          "cosine_similarity": 0.8769
+        },
+        {
+          "filename": "6720b7ba74544c74bc5e6dcff233c744.jpg",
+          "cosine_similarity": 0.764
+        },
+        {
+          "filename": "cc7289c8a85f45609633a5f51328b352.jpg",
+          "cosine_similarity": 0.7639
+        },
+        {
+          "filename": "1c8e967da4a44206889746e287259b2e.jpg",
+          "cosine_similarity": 0.7617
+        }
+      ],
+      "figure": "C:\\Users\\User\\Desktop\\visual-product-recommendations-v2\\artifacts\\results\\eval_query_3_0236aadcf2ec45d484970ae923179aa7_409.png"
+    }
+  ]
+}
