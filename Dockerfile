@@ -1,7 +1,7 @@
 # Dockerfile for deploying this app on Hugging Face Spaces (Docker SDK).
 # Hugging Face Spaces expects the app to listen on port 7860 by default.
 
-FROM python:3.11-slim
+FROM python:3.14-slim
 
 WORKDIR /app
 
