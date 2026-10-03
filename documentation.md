@@ -22,9 +22,11 @@ this same full 31,702-image catalogue and the same embeddings from a
 Hugging Face Hub dataset repository at startup and serves recommendations
 from it directly.
 
-**[Insert one or more of the figures from `artifacts/results/` here - each
-shows a query image alongside its top-5 recommendations and their cosine
-similarity scores.]**
+![Query 1 recommendations](artifacts/results/eval_query_1_97bfc156220748d8b56def5b4b58f743.png)
+
+![Query 2 recommendations](artifacts/results/eval_query_2_0f112da04dc5487abbb4a5776489906c.png)
+
+![Query 3 recommendations - note the perfect 1.000 match discussed below](artifacts/results/eval_query_3_0236aadcf2ec45d484970ae923179aa7_409.png)
 
 ## Limitations and Future Improvements
 
