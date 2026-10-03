@@ -24,6 +24,13 @@ from config import config
 
 VALID_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".bmp"}
 
+# Cleaned images are written into shard_NN subfolders (not one flat folder).
+# This is done from the start, not as an afterthought, because Hugging Face
+# Hub rejects more than 10,000 files in a single git directory - a large
+# catalogue (like this project's ~31,700 images) would otherwise fail at
+# upload time (see src/upload_to_hf.py) even though cleaning itself succeeds.
+SHARD_SIZE = 8000
+
 
 def is_valid_image(path: Path) -> bool:
     try:
@@ -79,12 +86,18 @@ def process_images(raw_dir: str = None, out_dir: str = None) -> pd.DataFrame:
             continue
         seen_hashes.add(phash)
 
-        dest = out_dir / path.name
+        shard_name = f"shard_{len(records) // SHARD_SIZE:02d}"
+        shard_dir = out_dir / shard_name
+        shard_dir.mkdir(exist_ok=True)
+
+        dest = shard_dir / path.name
         if dest.exists():
-            dest = out_dir / f"{path.stem}_{len(records)}{path.suffix}"
+            dest = shard_dir / f"{path.stem}_{len(records)}{path.suffix}"
         import shutil
         shutil.copy2(path, dest)
-        records.append({"filename": dest.name, "source_path": str(path), "phash": str(phash)})
+
+        relative_path = f"{shard_name}/{dest.name}"
+        records.append({"filename": relative_path, "source_path": str(path), "phash": str(phash)})
 
     manifest = pd.DataFrame(records)
     manifest.to_csv(config.CLEANED_MANIFEST_CSV, index=False)

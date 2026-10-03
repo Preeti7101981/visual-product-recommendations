@@ -28,8 +28,10 @@ def build_embeddings(cleaned_dir: str = None, out_path: str = None):
     cleaned_dir = Path(cleaned_dir or config.DATA_PROCESSED_DIR)
     out_path = out_path or config.EMBEDDINGS_PATH
 
+    # rglob (not iterdir) because images now live in shard_NN subfolders,
+    # not directly in cleaned_dir - see data_processing.py
     image_paths = sorted(
-        p for p in cleaned_dir.iterdir()
+        p for p in cleaned_dir.rglob("*")
         if p.suffix.lower() in VALID_EXTENSIONS and p.is_file()
     )
     print(f"Building embeddings for {len(image_paths)} images from {cleaned_dir}...")
@@ -49,9 +51,11 @@ def build_embeddings(cleaned_dir: str = None, out_path: str = None):
             print(f"Skipping {path.name}: {e}")
             continue
         embeddings.append(emb)
-        # Store filenames as relative, forward-slash paths so the mapping is
-        # portable across machines / OSes (Issue 4: correct filename mapping)
-        filenames.append(path.name)
+        # Store the shard-relative path (e.g. "shard_00/abc123.jpg"), not just
+        # the bare filename, so the embedding-to-image mapping stays correct
+        # regardless of which shard subfolder a file lives in, and so paths
+        # are portable across machines / OSes (Issue 4: correct filename mapping)
+        filenames.append(path.relative_to(cleaned_dir).as_posix())
 
     embeddings_tensor = torch.stack(embeddings)
     torch.save({"embeddings": embeddings_tensor, "filenames": filenames}, out_path)
